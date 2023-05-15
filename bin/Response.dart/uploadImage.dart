@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
-
-
+import 'package:image_compression/image_compression.dart';
 
 import 'package:shelf/shelf.dart';
 
@@ -24,6 +23,17 @@ uploadImage(Request req, String image_name) async {
     final file = File('bin/images/$image_name.${contentType.subtype}');
     await file.writeAsBytes(body);
 
+    final input = ImageFile(
+      rawBytes: file.readAsBytesSync(),
+      filePath: file.path,
+    );
+
+    final compressedImage = compress(ImageFileConfiguration(input: input));
+
+    // comparing the size of the compressed image and the original
+    print('Input size = ${file.lengthSync()}');
+    print('compressedImage size = ${compressedImage.sizeInBytes}');
+    print("---------------");
     // checking to see the output of "body"
     print(body);
 
