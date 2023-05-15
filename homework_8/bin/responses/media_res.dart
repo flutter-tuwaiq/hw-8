@@ -4,6 +4,7 @@ import 'package:shelf/shelf.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http_parser/http_parser.dart';
 import 'package:image/image.dart' as img;
+import 'package:image_compression/image_compression.dart';
 
 Response rootHandler(Request _) {
   return Response.ok('server is working');
@@ -23,6 +24,16 @@ Future<Response> uploadImageHandler(Request req, String fileName) async {
     File jsonFile = File('bin/images/$fileName.${contentType.subtype}');
 
     await jsonFile.writeAsBytes(body);
+
+// -------------------- here is the code for compressing the image. -----------------------
+    final input = ImageFile(
+      rawBytes: jsonFile.readAsBytesSync(),
+      filePath: jsonFile.path,
+    );
+    final output = compress(ImageFileConfiguration(input: input));
+    print('Input size = ${jsonFile.lengthSync()}');
+    print('Output size = ${output.sizeInBytes}');
+// ----------------------------------------------------------------------------------------
 
 // -- this function takes the path of the image with the width and height and resize it. --
     resizeImage(path: jsonFile.path, imageWidth: 1000, imageHeight: 1000);
