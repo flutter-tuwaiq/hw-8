@@ -18,12 +18,12 @@ uploadvideo(Request req) async {
     stream.onDone(() {
       completer.complete(chunks.expand((bit) => bit).toList());
     });
-    final byteImage = await completer.future;
+    final byteVideo = await completer.future;
     final contentType = MediaType.parse(req.headers["Content-Type"]!);
     final id = Random().nextInt(999999); 
     final file = File("bin/video/$id.${contentType.subtype}");
-    await file.writeAsBytes(byteImage);
-    print(byteImage);
+    await file.writeAsBytes(byteVideo);
+    print(byteVideo);
 
     return Response.ok("The video has been sent successfully");
   } catch (error) {
