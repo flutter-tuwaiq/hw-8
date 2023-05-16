@@ -10,8 +10,9 @@ CreatePostuser(Request req) async {
   try {
     final contentType = MediaType.parse(req.headers['Content-Type']!);
     final body = await req.read().expand((element) => element).toList();
+    final nameimag = Random().nextInt(99999);
 
-    final file = File('bin/images/ ${midalwire().nameimag}.png');
+    final file = File('bin/images/ $nameimag.png');
 
     await file.writeAsBytes(body);
 
