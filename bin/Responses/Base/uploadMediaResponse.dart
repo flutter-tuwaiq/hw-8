@@ -6,6 +6,7 @@ import 'package:shelf/shelf.dart';
 
 import 'package:http_parser/http_parser.dart';
 
+// __________________ POST: Upload image _________________________
 // Upload Image Response: check if all required data is recived and add them
 uploadImageResponse(Request req) async {
   try {
@@ -48,6 +49,7 @@ uploadImageResponse(Request req) async {
   }
 }
 
+// __________________ POST: Upload Video _________________________
 // Upload video Response: check if all required data is recived and add them
 uploadVideoResponse(Request req) async {
   try {
